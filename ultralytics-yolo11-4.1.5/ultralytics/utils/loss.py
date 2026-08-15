@@ -225,10 +225,10 @@ class BboxLoss(nn.Module):
         self.nwd_loss = False
         self.iou_ratio = 0.5 # total_iou_loss = self.iou_ratio * iou_loss + (1 - self.iou_ratio) * nwd_loss
         
-        # WiseIOU
-        self.use_wiseiou = False
+        # Wise-SIoU: apply the repository's dynamic Wise-IoU focusing to SIoU geometry.
+        self.use_wiseiou = True
         if self.use_wiseiou:
-            self.wiou_loss = WiseIouLoss(ltype='WIoU', monotonous=False, inner_iou=False, focaler_iou=False)
+            self.wiou_loss = WiseIouLoss(ltype='SIoU', monotonous=False, inner_iou=False, focaler_iou=False)
 
     def forward(self, pred_dist, pred_bboxes, anchor_points, target_bboxes, target_scores, target_scores_sum, fg_mask, mpdiou_hw=None):
         """IoU loss."""

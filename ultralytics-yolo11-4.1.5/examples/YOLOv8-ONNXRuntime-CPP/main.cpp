@@ -89,7 +89,7 @@ void Classifier(YOLO_V8*& p)
             cv::imshow("TEST_CLS", img);
             cv::waitKey(0);
             cv::destroyAllWindows();
-            //cv::imwrite("E:\\output\\" + std::to_string(k) + ".png", img);
+            //cv::imwrite("output\\" + std::to_string(k) + ".png", img);
         }
 
     }

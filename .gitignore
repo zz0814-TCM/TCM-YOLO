@@ -1,0 +1,35 @@
+# Python and editor artifacts
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+.env.*
+.idea/
+.vscode/
+*.log
+
+# Local datasets, experiment outputs, and model weights
+dataset/
+datasets/
+runs/
+weights/
+outputs/
+*.cache
+*.pt
+*.pth
+*.onnx
+*.engine
+*.ckpt
+
+# Secrets and local credentials
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/

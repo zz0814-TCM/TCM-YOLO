@@ -1,21 +1,33 @@
+import argparse
 import warnings
-warnings.filterwarnings('ignore')
-from ultralytics import YOLO
+from pathlib import Path
 
-if __name__ == '__main__':
-    model = YOLO('runs/train/exp/weights/best.pt') # select your model.pt path
-    model.predict(source='dataset/images/test',
-                  imgsz=640,
-                  project='runs/detect',
-                  name='exp',
-                  save=True,
-                  # conf=0.2,
-                  # iou=0.7,
-                  # agnostic_nms=True,
-                  # visualize=True, # visualize model features maps
-                  # line_width=2, # line width of the bounding boxes
-                  # show_conf=False, # do not show prediction confidence
-                  # show_labels=False, # do not show prediction labels
-                  # save_txt=True, # save results as .txt file
-                  # save_crop=True, # save cropped images with results
-                )
+
+ROOT = Path(__file__).resolve().parent
+DEFAULT_MODEL = ROOT / "runs/train/exp/weights/best.pt"
+DEFAULT_SOURCE = ROOT / "dataset/images/test"
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Run TCM-YOLO inference on clinical tongue images.")
+    parser.add_argument("--model", default=str(DEFAULT_MODEL), help="Trained model checkpoint.")
+    parser.add_argument("--source", default=str(DEFAULT_SOURCE), help="Image, directory, video, or stream source.")
+    parser.add_argument("--imgsz", type=int, default=640)
+    parser.add_argument("--project", default=str(ROOT / "runs/detect"))
+    parser.add_argument("--name", default="exp")
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    warnings.filterwarnings("ignore")
+    from ultralytics import YOLO
+
+    model = YOLO(args.model)
+    model.predict(
+        source=args.source,
+        imgsz=args.imgsz,
+        project=args.project,
+        name=args.name,
+        save=True,
+    )
